@@ -1,0 +1,62 @@
+h2 {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.barra-container {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  height: 16px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.barra {
+  height: 100%;
+  background-color: #d6a207; // Color de Ionic
+  transition: width 0.3s ease;
+}
+
+::ng-deep ion-modal.custom-modal {
+  --border-radius: 16px 16px 0 0;
+  --box-shadow: 0px -2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.ventas-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.venta-mini-card {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #f4f4f4;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.venta-mini-card img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.venta-info h3 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.venta-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}

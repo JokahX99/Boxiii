@@ -1,0 +1,163 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <img
+      src="assets/images/LogoBoxi.png"
+      alt="Logo"
+      style="width: 100px; height: auto"
+    />
+    <ion-buttons slot="end">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <h2> Estadísticas Mensuales </h2>
+
+  <ion-card>
+    <ion-card-header class="ion-text-center">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <ion-icon name="chevron-back-outline" size="large" (click)="cambiarMes(-1)"></ion-icon>
+        <ion-card-title>{{ nombreMesActual }} {{ anioActual }}</ion-card-title>
+        <ion-icon name="chevron-forward-outline" size="large" (click)="cambiarMes(1)"></ion-icon>
+      </div>
+    </ion-card-header>
+
+    <ion-card-content class="ion-text-center">
+      <ion-card-title>{{ gananciasDelMes | currency:'CLP':'symbol':'1.0' }}</ion-card-title>
+      <br>
+      <ion-card-subtitle>Total de productos registrados: {{ totalProductos }}</ion-card-subtitle>
+      <p>Total de Ventas: {{ totalVentas }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="topVentasDelMes.length > 0; else noVentasMes">
+  <ion-card-header>
+    <ion-card-title>Mayores ventas este mes</ion-card-title>
+    <ion-card-subtitle>Top 3 productos con más ganancias</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content class="ventas-column">
+    <div class="venta-mini-card" *ngFor="let producto of topVentasDelMes.slice(0, 3)">
+      <img [src]="producto.imagen || 'assets/images/placeholder.png'" alt="Producto" />
+      <div class="venta-info">
+        <h3>{{ producto.nombre }}</h3>
+        <p>Cantidad vendida: {{ producto.cantidadVendida }}</p>
+        <p>Ganancia total: {{ producto.gananciaTotal | currency:'CLP' }}</p>
+      </div>
+    </div>
+    <div class="ion-text-end ion-padding-top">
+      <ion-button fill="clear" size="small" (click)="verMasEstadistica('ventasMes')">Ver más</ion-button>
+    </div>
+  </ion-card-content>
+</ion-card>
+
+
+  <ng-template #noVentasMes>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Mayores ventas este mes</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="ion-text-center">Todavía no se realizan ventas para este mes.</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+
+  <h2> Estadísticas Generales </h2>
+
+  <!-- Productos más vendidos -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Productos más Vendidos</ion-card-title>
+      <ion-card-subtitle>Top 3 productos con más ventas</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <div *ngFor="let prod of productosMasVendidos">
+        <p>{{ prod.nombre }}: {{ prod.cantidadVendida }}</p>
+        <div class="barra-container">
+          <div class="barra" [style.width.%]="(prod.cantidadVendida / productosMasVendidos[0].cantidadVendida) * 100"></div>
+        </div>
+      </div>
+      <div class="ion-text-end ion-padding">
+        <ion-button fill="clear" size="small" (click)="verMasEstadistica('ventas')">Ver más</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Productos con más stock -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Productos con Mayor Stock</ion-card-title>
+      <ion-card-subtitle>Top 3 productos con más cantidad disponible</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <div *ngFor="let prod of productosConMasStock">
+        <p>{{ prod.nombre }}: {{ prod.stock }}</p>
+        <div class="barra-container">
+          <div class="barra" [style.width.%]="(prod.stock / productosConMasStock[0].stock) * 100"></div>
+        </div>
+      </div>
+      <div class="ion-text-end ion-padding">
+        <ion-button fill="clear" size="small" (click)="verMasEstadistica('stockMas')">Ver más</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Productos con menos stock -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Productos con Menor Stock</ion-card-title>
+      <ion-card-subtitle>Top 3 productos con menos cantidad disponible</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <div *ngFor="let prod of productosConMenosStock">
+        <p>{{ prod.nombre }}: {{ prod.stock }}</p>
+        <div class="barra-container">
+          <div class="barra" [style.width.%]="(prod.stock / productosConMenosStock[productosConMenosStock.length - 1].stock) * 100"></div>
+        </div>
+      </div>
+      <div class="ion-text-end ion-padding">
+        <ion-button fill="clear" size="small" (click)="verMasEstadistica('stockMenos')">Ver más</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+ <!-- Modal en el mismo archivo -->
+<ion-modal
+  *ngIf="mostrarModal"
+  [isOpen]="mostrarModal"
+  class="custom-modal"
+  [initialBreakpoint]="0.4"
+  [breakpoints]="[0.4, 0.8]"
+  [handleBehavior]="'cycle'"
+  (willDismiss)="cerrarModal()"
+>
+  <ng-template>
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item lines="full">
+          <ion-label>
+            <h2>{{ tituloModal }}</h2>
+          </ion-label>
+          <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="cerrarModal()">
+              <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+
+        <ion-item *ngFor="let prod of productosModal">
+          <ion-label>
+            <h3>{{ prod.nombre }}</h3>
+            <p *ngIf="prod.cantidadVendida">Cantidad vendida: {{ prod.cantidadVendida }}</p>
+            <p *ngIf="prod.stock !== undefined">Stock: {{ prod.stock }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
