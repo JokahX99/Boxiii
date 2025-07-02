@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
-const URL = 'http://localhost:3000/api'; // Ajusta si tu API usa otro puerto o prefijo
+const URL = 'https://ts1dhn62-3000.brs.devtunnels.ms/api'; // Ajusta si tu API usa otro puerto o prefijo
 
 export interface VentaProductoDto {
   productoId: number;

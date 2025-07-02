@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { producto } from '../models/producto.models';
 import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
-const URL = 'http://localhost:3000/api';
+const URL = 'https://ts1dhn62-3000.brs.devtunnels.ms/api';
 
 @Injectable({
   providedIn: 'root',
