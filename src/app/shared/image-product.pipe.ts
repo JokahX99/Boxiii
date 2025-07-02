@@ -12,7 +12,7 @@ export class ImageProductPipe implements PipeTransform {
       return 'assets/images/no-image.png';
     }
 
-    if (typeof value === 'string' && value.startsWith('blob:')) {
+    if (typeof value === 'string') {
       return value;
     }
 
