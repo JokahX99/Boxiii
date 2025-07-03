@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://ts1dhn62-3000.brs.devtunnels.ms/api',
+  baseUrl: 'http://186.64.122.182:3000/api',
 };
 
 /*

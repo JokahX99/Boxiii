@@ -13,10 +13,6 @@ export class ImageProductPipe implements PipeTransform {
     }
 
     if (typeof value === 'string') {
-      return value;
-    }
-
-    if (typeof value === 'string') {
       return `${URL}/files/product/${value}`;
     }
 

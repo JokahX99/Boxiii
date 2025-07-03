@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductoService } from 'src/app/service/producto.service';
 import { VentaService } from 'src/app/service/venta.service';
 import { producto } from 'src/app/models/producto.models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrar-venta',
@@ -18,7 +19,7 @@ export class RegistrarVentaPage implements OnInit {
   productosVenta: any[] = [];
   busqueda: string = '';
   mostrarCalendario = false;
-
+  
   subMonto = 0;
   iva = 0;
   montoTotal = 0;
@@ -26,7 +27,8 @@ export class RegistrarVentaPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private productoService: ProductoService,
-    private ventaService: VentaService
+    private ventaService: VentaService,
+    private router: Router
   ) {
     this.ventaForm = this.fb.group({
       fecha: [new Date().toISOString().substring(0, 10), Validators.required],
@@ -155,5 +157,9 @@ export class RegistrarVentaPage implements OnInit {
     }
 
     return nroBoleta;
+  }
+
+  goBack() {
+    this.router.navigate(['/principal']);
   }
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { producto } from '../models/producto.models';
 import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
-const URL = 'https://ts1dhn62-3000.brs.devtunnels.ms/api';
+const URL = 'http://186.64.122.182:3000/api';
 
 @Injectable({
   providedIn: 'root',
@@ -34,8 +34,22 @@ export class ProductoService {
     );
   }
 
-  public updateProducto(id: string, producto: producto) {
-    return this._http.patch(`${URL}/product/${id}`, producto);
+  public updateProducto(
+    id: string,
+    productoLike: producto,
+    imagesFileList?: FileList
+  ) {
+    const currentImages = productoLike.images || [];
+
+    return this.uploadImages(imagesFileList).pipe(
+      map((imageName) => ({
+        ...productoLike,
+        images: [...currentImages, ...imageName],
+      })),
+      switchMap((product) =>
+        this._http.patch<producto>(`${URL}/product/${id}`, product)
+      )
+    );
   }
 
   public deleteProducto(id: string) {

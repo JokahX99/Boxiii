@@ -91,11 +91,10 @@ export class EditarProductoPage implements OnInit {
 
     const formData = {
       ...this.productForm.getRawValue(),
-      images: this.tempImages,
     } as producto;
 
     this.productoService
-      .updateProducto(this.productoEditando.id, formData)
+      .updateProducto(this.productoEditando.id, formData, this.imageFileList)
       .subscribe({
         next: () => {
           this.cargando = false;
