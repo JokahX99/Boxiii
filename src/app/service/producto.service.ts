@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { producto } from '../models/producto.models';
 import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
-const URL = 'http://186.64.122.182:3000/api';
+const URL = 'https://www.box1.cl/api';
 
 @Injectable({
   providedIn: 'root',

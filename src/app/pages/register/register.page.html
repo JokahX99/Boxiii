@@ -78,4 +78,13 @@
       >Crear Usuario</ion-button
     >
   </div>
+
+  <!-- Overlay de carga -->
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="spinner-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Creando usuario...</p>
+  </div>
+</div>
+
 </ion-content>

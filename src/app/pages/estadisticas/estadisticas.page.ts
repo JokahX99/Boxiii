@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { VentaService } from 'src/app/service/venta.service';
 import { ProductoService } from 'src/app/service/producto.service'; // Asegúrate que exista
 import { Router } from '@angular/router';
+import { IonHeader, IonCardSubtitle, IonContent, IonIcon } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-estadisticas',

@@ -33,11 +33,23 @@
       </ion-input>
     </form>
 
-    <ion-button (click)="onSubmit()" style="margin-bottom: 20px"
-      >Ingresar</ion-button
-    >
+    <ion-button (click)="onSubmit()" [disabled]="isLoading" style="margin-bottom: 20px">
+      <ng-container *ngIf="!isLoading; else loading">
+        Ingresar
+      </ng-container>
+      <ng-template #loading>
+        <ion-spinner name="crescent"></ion-spinner>
+      </ng-template>
+    </ion-button>
 
     <p>No tienes una cuenta? <a (click)="Register()">Regístrate Aquí.</a></p>
     <p>¿Olvidaste tu contraseña? <a>Recupera tu contraseña.</a></p>
   </div>
+
+ <div *ngIf="isLoading" class="loading-overlay">
+  <div class="spinner-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Iniciando sesión...</p>
+  </div>
+</div>
 </ion-content>

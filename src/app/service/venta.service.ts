@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
-const URL = 'http://186.64.122.182:3000/api'; 
+const URL = 'https://www.box1.cl/api'; 
 
 export interface VentaProductoDto {
   productoId: number;

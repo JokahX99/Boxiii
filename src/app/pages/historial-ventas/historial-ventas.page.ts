@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { VentaService } from 'src/app/service/venta.service';
-import { IonHeader, IonButton, IonToolbar, IonTitle, IonButtons, IonIcon } from "@ionic/angular/standalone";
+import { IonHeader, IonButton, IonToolbar, IonTitle, IonButtons, IonIcon, IonContent, IonList, IonCardSubtitle } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-historial-ventas',

@@ -4,7 +4,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { AuthReponse } from '../interfaces/response-auth.interface';
 import { User } from '../interfaces/user.interface';
 
-const URL = 'http://186.64.122.182:3000/api';
+const URL = 'https://www.box1.cl/api';
 
 @Injectable({
   providedIn: 'root',

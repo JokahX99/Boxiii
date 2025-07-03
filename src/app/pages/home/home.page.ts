@@ -12,6 +12,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class HomePage {
   public hasError: boolean = false;
+  public isLoading: boolean = false;
 
   constructor(
     private router: Router,
@@ -28,25 +29,37 @@ export class HomePage {
   public onSubmit() {
     if (this.loginForm.invalid) {
       this.hasError = true;
+      this.presentToast('Por favor completa todos los campos correctamente.');
       setTimeout(() => {
         this.hasError = false;
       }, 2000);
       return;
     }
 
+    this.isLoading = true;
     const { email, password } = this.loginForm.value;
 
-    this.authService.login(email!, password!).subscribe((isAuthenticated) => {
-      if (isAuthenticated) {
-        this.router.navigateByUrl('/principal');
-        return;
-      }
+    this.authService.login(email!, password!).subscribe(
+      (isAuthenticated) => {
+        this.isLoading = false;
 
-      this.hasError = true;
-      setTimeout(() => {
-        this.hasError = false;
-      }, 2000);
-    });
+        if (isAuthenticated) {
+          this.presentToast('Inicio de sesión exitoso.');
+          this.router.navigateByUrl('/principal');
+        } else {
+          this.hasError = true;
+          this.presentToast('Credenciales inválidas.');
+          setTimeout(() => {
+            this.hasError = false;
+          }, 2000);
+        }
+      },
+      (error) => {
+        this.isLoading = false;
+        this.presentToast('Ocurrió un error al iniciar sesión.');
+        console.error(error);
+      }
+    );
   }
 
   Register() {

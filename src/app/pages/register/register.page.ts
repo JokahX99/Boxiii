@@ -18,6 +18,8 @@ export class RegisterPage {
     private toastCtrl: ToastController
   ) {}
 
+  public isLoading: boolean = false;
+
   public registerForm = this.formBuilder.group({
     fullName: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
@@ -51,6 +53,7 @@ export class RegisterPage {
       this.router.navigateByUrl('/principal');
     } catch (error) {
       this.presentToast('Error al crear usuario.');
+      this.isLoading = false;
     }
   }
 

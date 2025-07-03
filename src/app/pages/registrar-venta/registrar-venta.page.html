@@ -14,6 +14,9 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <h2>Registro de ventas</h2>
+  <ion-card-subtitle>Aqui puedes registrar las ventas que realizas.</ion-card-subtitle>
+  <br>
   <form [formGroup]="ventaForm">
 
     <!-- FECHA DE VENTA -->
@@ -21,6 +24,9 @@
       <ion-label>Fecha</ion-label>
       <ion-text>{{ ventaForm.value.fecha || 'Seleccionar fecha' }}</ion-text>
     </ion-item>
+    <ion-text color="medium">
+      <small>Ingresa una fecha que asignar aquí</small>
+    </ion-text>
 
     <ng-container *ngIf="mostrarCalendario">
       <ion-datetime
@@ -32,6 +38,7 @@
     </ng-container>
 
     <!-- BUSCADOR DE PRODUCTOS -->
+
     <ion-item>
       <ion-input
         name="busqueda"
@@ -42,6 +49,9 @@
         [clearInput]="true"
       ></ion-input>
     </ion-item>
+    <ion-text color="medium">
+      <small>Añade tus productos aquí buscando por nombre</small>
+    </ion-text>
 
     <ion-list *ngIf="productosFiltrados.length && busqueda">
       <ion-item
