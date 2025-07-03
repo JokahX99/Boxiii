@@ -41,7 +41,7 @@
 
   <ion-card-content class="ventas-column">
     <div class="venta-mini-card" *ngFor="let producto of topVentasDelMes.slice(0, 3)">
-      <img [src]="producto.imagen || 'assets/images/placeholder.png'" alt="Producto" />
+      <img [src]="producto.images | imageProduct" alt="Producto" />
       <div class="venta-info">
         <h3>{{ producto.nombre }}</h3>
         <p>Cantidad vendida: {{ producto.cantidadVendida }}</p>
@@ -69,23 +69,36 @@
   <h2> Estadísticas Generales </h2>
 
   <!-- Productos más vendidos -->
+  <ion-card *ngIf="productosMasVendidos.length > 0; else noVendidos">
+  <ion-card-header>
+    <ion-card-title>Productos más Vendidos</ion-card-title>
+    <ion-card-subtitle>Top 3 productos con más ventas</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <div *ngFor="let prod of productosMasVendidos">
+      <p>{{ prod.nombre }}: {{ prod.cantidadVendida }}</p>
+      <div class="barra-container">
+        <div class="barra" 
+             [style.width.%]="(prod.cantidadVendida / productosMasVendidos[0]?.cantidadVendida) * 100">
+        </div>
+      </div>
+    </div>
+    <div class="ion-text-end ion-padding">
+      <ion-button fill="clear" size="small" (click)="verMasEstadistica('ventas')">Ver más</ion-button>
+    </div>
+  </ion-card-content>
+</ion-card>
+
+<ng-template #noVendidos>
   <ion-card>
     <ion-card-header>
       <ion-card-title>Productos más Vendidos</ion-card-title>
-      <ion-card-subtitle>Top 3 productos con más ventas</ion-card-subtitle>
     </ion-card-header>
-    <ion-card-content>
-      <div *ngFor="let prod of productosMasVendidos">
-        <p>{{ prod.nombre }}: {{ prod.cantidadVendida }}</p>
-        <div class="barra-container">
-          <div class="barra" [style.width.%]="(prod.cantidadVendida / productosMasVendidos[0].cantidadVendida) * 100"></div>
-        </div>
-      </div>
-      <div class="ion-text-end ion-padding">
-        <ion-button fill="clear" size="small" (click)="verMasEstadistica('ventas')">Ver más</ion-button>
-      </div>
+    <ion-card-content class="ion-text-center">
+      <p>No hay datos de ventas disponibles.</p>
     </ion-card-content>
   </ion-card>
+</ng-template>
 
   <!-- Productos con más stock -->
   <ion-card>

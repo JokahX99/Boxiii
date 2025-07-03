@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { VentaService } from 'src/app/service/venta.service';
 import { ProductoService } from 'src/app/service/producto.service'; // Asegúrate que exista
 import { Router } from '@angular/router';
-import { IonHeader, IonCardSubtitle, IonContent, IonIcon } from "@ionic/angular/standalone";
+import { IonHeader, IonCardSubtitle, IonContent, IonIcon, IonToolbar, IonButtons, IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonModal } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-estadisticas',
@@ -34,8 +34,35 @@ productosModal: any[] = [];
   ngOnInit() {
     this.actualizarMes();
     this.cargarProductos();
+    this.obtenerProductosMasVendidos();
   }
 
+  obtenerProductosMasVendidos() {
+  this.ventaService.getVentas().subscribe((ventas) => {
+    const contador: { [nombre: string]: { nombre: string, cantidadVendida: number } } = {};
+
+    ventas.forEach((venta: any) => {
+      venta.VentaProductos.forEach((vp: any) => {
+        const nombre = vp.producto?.nombre ?? 'Desconocido';
+
+        if (!contador[nombre]) {
+          contador[nombre] = {
+            nombre,
+            cantidadVendida: 0
+          };
+        }
+
+        contador[nombre].cantidadVendida += vp.cantidad;
+      });
+    });
+
+    const topVendidos = Object.values(contador)
+      .sort((a, b) => b.cantidadVendida - a.cantidadVendida)
+      .slice(0, 3);
+
+    this.productosMasVendidos = topVendidos;
+  });
+}
   
 
   actualizarMes() {
@@ -66,18 +93,21 @@ productosModal: any[] = [];
     this.gananciasDelMes = ventasDelMes.reduce((acc, venta) => acc + venta.montoTotal, 0);
 
     // Calcular productos más vendidos este mes
-    const contadorProductos: { [nombre: string]: { nombre: string, cantidadVendida: number, gananciaTotal: number } } = {};
+    const contadorProductos: { [nombre: string]: { nombre: string, cantidadVendida: number, gananciaTotal: number,images: string[] } } = {};
+
 
     ventasDelMes.forEach((venta: any) => {
       venta.VentaProductos.forEach((vp: any) => {
         const nombre = vp.producto?.nombre ?? 'Desconocido';
         const ganancia = vp.precioUnitario * vp.cantidad;
-
+        const images = (vp.producto?.images ?? []).map((img: any) => img.url);
+        console.log(images)
         if (!contadorProductos[nombre]) {
           contadorProductos[nombre] = {
             nombre,
             cantidadVendida: 0,
             gananciaTotal: 0,
+            images
           };
         }
 

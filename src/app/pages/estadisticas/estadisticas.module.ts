@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { EstadisticasPageRoutingModule } from './estadisticas-routing.module';
 
 import { EstadisticasPage } from './estadisticas.page';
+import { ImageProductPipe } from 'src/app/shared/image-product.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    EstadisticasPageRoutingModule
+    EstadisticasPageRoutingModule,
+    ImageProductPipe
   ],
   declarations: [EstadisticasPage]
 })
